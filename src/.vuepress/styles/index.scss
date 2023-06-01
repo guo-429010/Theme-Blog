@@ -1,0 +1,26 @@
+@mixin titleStyle($size,$spacing) {
+    font-family: cursive;
+    font-size: $size;
+    letter-spacing: $spacing;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: linear-gradient(to right,#52d838,#02d9e0);
+}
+
+// 主页标题
+.blog-hero h1 {
+    @include titleStyle(3rem, 6px);
+    text-shadow: 2px 2px 1px #ffffff46;
+}
+
+// 导航栏标题
+.navbar .site-name {
+    font-weight: 700;
+    @include titleStyle(22px,3px);
+}
+
+// 一言文字
+.hitokoto-text span{
+    font-family: fangsong;
+}
