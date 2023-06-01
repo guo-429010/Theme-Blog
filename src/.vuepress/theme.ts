@@ -15,9 +15,9 @@ export default hopeTheme(
 
     favicon: "/logo.svg",
 
-    repo: "vuepress-theme-hope/vuepress-theme-hope",
+    repo: "https://github.com/guo-429010/Theme-Blog",
 
-    docsDir: "docs",
+    docsDir: "src",
 
     fullscreen: true,
 
