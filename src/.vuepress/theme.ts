@@ -113,6 +113,10 @@ export default hopeTheme(
 
       comment: {
         provider: "Giscus",
+        repo: "guo-429010/Theme-Blog",
+        repoId: "R_kgDOJqF4kQ",
+        category: "Announcements",
+        categoryId: "DIC_kwDOJqF4kc4CW4TS"
       },
 
       // all features are enabled for demo, only preserve features you need here
