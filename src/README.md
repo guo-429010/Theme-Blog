@@ -7,34 +7,22 @@ heroFullScreen: true
 bgImage: /assets/images/homeBg.png
 projects:
   - icon: project
-    name: 项目名称
-    desc: 项目详细描述
-    link: https://你的项目链接
+    name: 权限后台
+    desc: 使用Spring Security+Vue3搭建的权限管理后台
+    link: http://admin.guo123.top/login
+
+  - icon: blog
+    name: v1博客
+    desc: 使用VuePress v1搭建的博客项目
+    link: https://blog.guo123.top/
 
   - icon: link
-    name: 链接名称
-    desc: 链接详细描述
-    link: https://链接地址
-
-  - icon: book
-    name: 书籍名称
-    desc: 书籍详细描述
-    link: https://你的书籍链接
+    name: 项目主题
+    desc: 一个具有强大功能的 vuepress 主题
+    link: https://theme-hope.vuejs.press/zh/
 
   - icon: article
-    name: 文章名称
-    desc: 文章详细描述
-    link: https://你的文章链接
-
-  - icon: friend
-    name: 伙伴名称
-    desc: 伙伴详细介绍
-    link: https://你的伙伴链接
-
-  - icon: /logo.svg
-    name: 自定义项目
-    desc: 自定义详细介绍
-    link: https://你的自定义链接
-
-footer: true
+    name: Vue
+    desc: 渐进式JavaScript框架
+    link: https://cn.vuejs.org/guide/introduction.html
 ---

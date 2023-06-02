@@ -23,71 +23,68 @@ export default hopeTheme(
 
     navbar: [
       { text: "首页", icon: "home", link: "/" },
-      { text: "演示", icon: "select", link: "/demo/" },
-      {
-        text: "博文",
-        icon: "blog",
-        prefix: "/posts/",
-        children: [
-          "cherry",
-          "dragonfruit",
-          "tomato",
-          "strawberry",
-          {
-            text: "苹果",
-            link: "apple"
-          },
-          {
-            text: "香蕉",
-            link: "banana"
-          }
-        ]
-      },
-      {
-        text: "V2 文档",
-        icon: "note",
-        link: "https://theme-hope.vuejs.press/zh/",
-      },
+      { text: "前端", icon: "vscode", link: "/front/" },
+      { text: "后端", icon: "template", link: "/back/" },
+      { text: "工具", icon: "config", link: "/tool/" }
     ],
     sidebar: {
-      "/demo/": [
+      "/back/": [
+        '',
         {
-          text: '主要功能与配置演示',
-          icon: "select",
-          collapsible: false,
-          children: [
-            "",
-            "page",
-            "markdown",
-            "encrypt",
-            "disable"
-          ]
+          text: 'Java',
+          icon: "java",
+          collapsible: true,
+          prefix: "java",
+          children: "structure"
+        },
+        {
+          text: 'Linux',
+          icon: "linux",
+          collapsible: true,
+          prefix: "linux",
+          children: "structure"
+        },
+        {
+          text: 'MySQL',
+          icon: "mysql",
+          collapsible: true,
+          prefix: "mysql",
+          children: "structure"
         }
       ],
-      "/posts/": [
+      "/front/": [
+        '',
         {
-          text: "博客文章",
-          collapsible: false,
-          icon: "blog",
-          children: [
-            "cherry",
-            "dragonfruit",
-            "strawberry",
-            "tomato",
-            {
-              text: "苹果",
-              prefix: "apple",
-              collapsible: true,
-              children: "structure"
-            },
-            {
-              text: "香蕉",
-              prefix: "banana",
-              collapsible: true,
-              children: "structure"
-            }
-          ]
+          text: 'Vue',
+          icon: "vue",
+          collapsible: true,
+          prefix: "vue",
+          children: "structure"
+        },
+        {
+          text: 'JavaScript',
+          icon: "javascript",
+          collapsible: true,
+          prefix: "js",
+          children: "structure"
+        },
+        {
+          text: 'Css',
+          icon: "css",
+          collapsible: true,
+          prefix: "css",
+          children: "structure"
+        },
+        {
+          text: 'Html',
+          icon: "html",
+          collapsible: true,
+          prefix: "html",
+          children: "structure"
         }
+      ],
+      "/tool/": [
+        ''
       ]
     },
 
@@ -136,6 +133,7 @@ export default hopeTheme(
         katex: true,
         mark: true,
         mermaid: true,
+        card: true,
         playground: {
           presets: ["ts", "vue"],
         },

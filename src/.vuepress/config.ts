@@ -1,5 +1,6 @@
 import { defineUserConfig } from "vuepress";
 import { getDirname, path } from "@vuepress/utils";
+import { searchProPlugin } from "vuepress-plugin-search-pro";
 import theme from "./theme.js";
 
 const _dirname = getDirname(import.meta.url)
@@ -20,5 +21,11 @@ export default defineUserConfig({
       _dirname,
       "./components/BlogHero.vue"
     )
-  }
+  },
+  plugins: [
+    searchProPlugin({
+      indexContent: true,
+      autoSuggestions: true
+    })
+  ]
 });
