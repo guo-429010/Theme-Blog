@@ -84,9 +84,7 @@ export default hopeTheme(
           children: "structure"
         }
       ],
-      "/tool/": [
-        ''
-      ],
+      "/tool/": "structure",
       "/hot/": [
         {
           text: '文心一言',
