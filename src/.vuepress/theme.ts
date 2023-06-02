@@ -25,7 +25,8 @@ export default hopeTheme(
       { text: "首页", icon: "home", link: "/" },
       { text: "前端", icon: "vscode", link: "/front/" },
       { text: "后端", icon: "template", link: "/back/" },
-      { text: "工具", icon: "config", link: "/tool/" }
+      { text: "工具", icon: "config", link: "/tool/" },
+      { text: "文章", icon: "article", link: "/hot/" }
     ],
     sidebar: {
       "/back/": [
@@ -85,6 +86,22 @@ export default hopeTheme(
       ],
       "/tool/": [
         ''
+      ],
+      "/hot/": [
+        {
+          text: '文心一言',
+          icon: "/assets/icon/yiyan.png",
+          collapsible: true,
+          prefix: "yiyan",
+          children: "structure"
+        },
+        {
+          text: '必应',
+          icon: "/assets/icon/bing.svg",
+          collapsible: true,
+          prefix: "bing",
+          children: "structure"
+        }
       ]
     },
 
