@@ -116,13 +116,20 @@ export default hopeTheme(
         categoryId: "DIC_kwDOJqF4kc4CW4TS"
       },
 
+      copyCode: {
+        duration: 1000
+      },
+
       // all features are enabled for demo, only preserve features you need here
       mdEnhance: {
         align: true,
         attrs: true,
         chart: true,
         codetabs: true,
-        demo: true,
+        demo: {
+          jsfiddle: false,
+          codepen: false
+        },
         echarts: true,
         figure: true,
         flowchart: true,
