@@ -103,6 +103,10 @@ export default hopeTheme(
       ]
     },
 
+    sidebarSorter: ['readme','order'],
+
+    headerDepth: 4,
+
     blog: {
       avatar: "/assets/images/avatar.png",
       roundAvatar: true,

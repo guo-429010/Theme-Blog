@@ -6,7 +6,8 @@ tag:
   - checkbox
   - switch
 date: 2023-06-02
-star: true
+star: 60
+order: -2
 ---
 
 ## 凸起开关
