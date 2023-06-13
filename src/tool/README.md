@@ -11,3 +11,4 @@ date: 2023-06-02
 
 ## [目录](README.md)
 ### [Nginx教程](nginx.md)
+### [Image Magick](magick.md)
