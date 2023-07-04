@@ -62,3 +62,34 @@ flex是一种CSS布局属性，用于在父元素中排列子元素，使其在�
 - flex-end
 - center
 - baseline 向基线对齐
+## flex案例
+### 子项分组布局
+- 使用margin-right: auto;自动占满剩余空间
+::: normal-demo 模拟导航栏布局方案
+```html
+<div class="main">
+  <div /><div /><div /><div /><div /><div /><div />
+</div>
+```
+```css
+.main {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+.main div {
+  width: 50px;
+  height: 50px;
+  background: pink;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.main div:nth-of-type(2) {
+  margin-right: auto;
+}
+.main div:nth-of-type(5) {
+  margin-right: auto;
+}
+```
+:::
