@@ -376,6 +376,92 @@ flex是一种CSS布局属性，用于在父元素中排列子元素，使其在�
 ```
 :::
 ### 轮播图
-![img](https://guo123.top/api/image/file/wallhaven-001.jpg)
-![img](https://guo123.top/api/image/file/wallhaven-002.jpg)
-![img](https://guo123.top/api/image/file/wallhaven-003.jpg)
+::: normal-demo 轮播图案例
+```html
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <img src="https://guo123.top/api/image/file/wallhaven-001.jpg" />
+    </div>
+    <div class="swiper-slide">
+      <img src="https://guo123.top/api/image/file/wallhaven-002.jpg" />
+    </div>
+    <div class="swiper-slide">
+      <img src="https://guo123.top/api/image/file/wallhaven-003.jpg" />
+    </div>
+  </div>
+  <div class="swiper-pagination">
+    <span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span>
+    <span class="swiper-pagination-bullet"></span>
+    <span class="swiper-pagination-bullet"></span>
+  </div>
+  <div class="swiper-button-prev">
+    ⬅️
+  </div>
+  <div class="swiper-button-next">
+    ➡️
+  </div>
+</div>
+```
+```css
+.swiper-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.swiper-wrapper {
+  display: flex;
+  transition: .5s;
+}
+
+.swiper-slide {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.swiper-slide img {
+  width: 100%;
+}
+
+.swiper-pagination {
+  position: absolute;
+  height: 28px;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #c6bcaf;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #409eff;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
+
+.swiper-button-next {
+  right: 10px;
+}
+```
+:::
