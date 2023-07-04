@@ -175,8 +175,9 @@ flex是一种CSS布局属性，用于在父元素中排列子元素，使其在�
 }
 ```
 :::
-### flex-basis及flex缩写
+### flex-basis
 - 默认值是auto，指定了flex元素在主轴方向上的初始大小
+- 可选值: auto 大小 百分比
 - [更多信息](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex-basis)
 ::: normal-demo 示例
 ```html
@@ -207,6 +208,96 @@ flex是一种CSS布局属性，用于在父元素中排列子元素，使其在�
   text-align: center;
   background: pink;
   flex-basis: 200px;
+}
+```
+:::
+### flex
+- flex-grow,flex-shrink,flex-basis的简写
+- 设置了弹性项目如何增大或缩小以适应其弹性容器中可用的空间
+- initial: 元素会根据自身宽高设置尺寸。它会缩短自身以适应 flex 容器，但不会伸长并吸收 flex 容器中的额外自由空间来适应 flex 容器。相当于将属性设置为"flex: 0 1 auto"
+- auto: 元素会根据自身的宽度与高度来确定尺寸，但是会伸长并吸收 flex 容器中额外的自由空间，也会缩短自身来适应 flex 容器。这相当于将属性设置为 "flex: 1 1 auto"
+- none: 元素会根据自身宽高来设置尺寸。它是完全非弹性的：既不会缩短，也不会伸长来适应 flex 容器。相当于将属性设置为"flex: 0 0 auto"
+- [更多信息](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex)
+### order
+- 默认值是0，改变一个flex子项的排序位置
+- [更多信息](https://developer.mozilla.org/zh-CN/docs/Web/CSS/order)
+::: normal-demo 排序demo
+```html
+<div class="main">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+  <div>5</div>
+</div>
+```
+```css
+.main {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.main div {
+  width: 50px;
+  height: 50px;
+  background: pink;
+  border-radius: 50%;
+  line-height: 50px;
+  text-align: center;
+}
+.main div:nth-of-type(1) {
+  order: 5;
+}
+.main div:nth-of-type(2) {
+  order: 3;
+}
+.main div:nth-of-type(3) {
+  order: 2;
+}
+.main div:nth-of-type(4) {
+  order: 1;
+}
+.main div:nth-of-type(5) {
+  order: 4;
+}
+```
+:::
+### align-self
+- 默认值是auto，控制单独某一个flex子项的垂直对齐方式
+- auto: 和父元素的align-items值一样
+- [更多信息](https://developer.mozilla.org/zh-CN/docs/Web/CSS/align-self)
+::: normal-demo 更改子项垂直对齐方式
+```html
+<div class="main">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+</div>
+```
+```css
+.main {
+  width: 100%;
+  display: flex;
+}
+.main div {
+  width: 50px;
+  height: 50px;
+  background: pink;
+  margin: 0 10px;
+  text-align: center;
+}
+.main div:nth-of-type(2) {
+  height: 20px;
+  align-self: flex-end;
+}
+.main div:nth-of-type(3) {
+  height: 20px;
+  align-self: center;
+}
+.main div:nth-of-type(4) {
+  height: 20px;
+  align-self: flex-start;
 }
 ```
 :::
@@ -241,3 +332,50 @@ flex是一种CSS布局属性，用于在父元素中排列子元素，使其在�
 }
 ```
 :::
+### 溢出项布局
+::: normal-demo 溢出导航条案例
+```html
+<div class="main">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+  <div>5</div>
+  <div>6</div>
+  <div>7</div>
+  <div>8</div>
+  <div>9</div>
+  <div>10</div>
+  <div>11</div>
+  <div>12</div>
+</div>
+```
+```css
+.main {
+  width: 360px;
+  height: 100px;
+  margin: auto;
+  background: #DDA0DD;
+  display: flex;
+  align-items: center;
+  overflow-y: auto;
+}
+.main div {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background: pink;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+.main div:last-child {
+  margin-right: 0;
+}
+```
+:::
+### 轮播图
+![img](https://guo123.top/api/image/file/wallhaven-001.jpg)
+![img](https://guo123.top/api/image/file/wallhaven-002.jpg)
+![img](https://guo123.top/api/image/file/wallhaven-003.jpg)
