@@ -62,6 +62,154 @@ flex是一种CSS布局属性，用于在父元素中排列子元素，使其在�
 - flex-end
 - center
 - baseline 向基线对齐
+## flex子项
+### flex-grow
+- 默认值是0，表示flex容器空间剩余时，元素的扩展比例
+- flex-grow: 1; 当比例值大于等于1,将占满剩余所有空间,如果有多个子项，则会将剩余空间分成多份进行分配
+- flex-grow: 0.5; 自身+剩余空间的50%
+- [更多信息](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex-grow)
+::: normal-demo 示例
+```html
+<div class="main1">
+  <div class="content"></div>
+  <div class="content">flex-grow: 1;</div>
+  <div class="content"></div>
+</div>
+<div class="main2">
+  <div class="content"></div>
+  <div class="content">flex-grow: 0.5;</div>
+  <div class="content"></div>
+</div>
+<div class="main3">
+  <div class="content">flex-grow: 1;</div>
+  <div class="content">flex-grow: 2;</div>
+  <div class="content">flex-grow: 3;</div>
+</div>
+<div class="main4">
+  <div class="content">flex-grow: 0.5;</div>
+  <div class="content">flex-grow: 0.5;</div>
+  <div class="content">flex-grow: 1;</div>
+</div>
+```
+```css
+.main1 , .main2, .main3, .main4 {
+  width: 100%;
+  height: 80px;
+  display: flex;
+}
+.content {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  margin: 0 5px;
+  background: pink;
+}
+.main1 div:nth-of-type(2) {
+  flex-grow: 1;
+}
+.main2 div:nth-of-type(2) {
+  flex-grow: 0.5;
+}
+.main3 div:nth-of-type(1) {
+  flex-grow: 1;
+}
+.main3 div:nth-of-type(2) {
+  flex-grow: 2;
+}
+.main3 div:nth-of-type(3) {
+  flex-grow: 3;
+}
+.main4 div:nth-of-type(1) {
+  flex-grow: 0.5;
+}
+.main4 div:nth-of-type(2) {
+  flex-grow: 0.5;
+}
+.main4 div:nth-of-type(3) {
+  flex-grow: 1;
+}
+```
+:::
+### flex-shrink
+- 默认值是1，表示flex容器空间不足时，元素的收缩比例
+- 1: 自动收缩，跟容器大小相同
+- 0.5：收缩超出空间的50%
+- [更多信息](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex-shrink)
+::: normal-demo 示例
+```html
+<div class="main1">
+  <div class="content">flex-shrink: 0.5;</div>
+</div>
+<div class="main2">
+  <div class="content">flex-shrink: 1;</div>
+  <div class="content">flex-shrink: 2;</div>
+</div>
+```
+```css
+.main1, .main2 {
+  width: 60%;
+  margin-bottom: 10px;
+  border: 1px solid red;
+  display: flex;
+}
+.content {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  background: pink;
+}
+.content:nth-of-type(2) {
+  background: LavenderBlush;
+}
+.main1 div {
+  width: 200%;
+  flex-shrink: 0.5;
+}
+.main2 div:nth-of-type(1) {
+  flex-shrink: 1;
+}
+.main2 div:nth-of-type(2) {
+  flex-shrink: 2;
+}
+```
+:::
+### flex-basis及flex缩写
+- 默认值是auto，指定了flex元素在主轴方向上的初始大小
+- [更多信息](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex-basis)
+::: normal-demo 示例
+```html
+<div class="main">
+  <div class="content">水平方向</div>
+</div>
+<div class="main">
+  <div class="content">垂直方向</div>
+</div>
+```
+```css
+.main {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 10px;
+  border: 1px solid red;
+  display: flex;
+}
+.main:nth-child(1) {
+  flex-direction: row;
+}
+.main:nth-child(2) {
+  flex-direction: column;
+}
+.content {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  background: pink;
+  flex-basis: 200px;
+}
+```
+:::
 ## flex案例
 ### 子项分组布局
 - 使用margin-right: auto;自动占满剩余空间
