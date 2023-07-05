@@ -376,6 +376,9 @@ flex是一种CSS布局属性，用于在父元素中排列子元素，使其在�
 ```
 :::
 ### 轮播图
+- 使用flex-shrink: 0;保证图片占满容器
+- 使用overflow: hidden;隐藏其余图片
+- 结合transform：translateX();实现左右滚动
 ::: normal-demo 轮播图案例
 ```html
 <div class="swiper-container">
@@ -395,10 +398,10 @@ flex是一种CSS布局属性，用于在父元素中排列子元素，使其在�
     <span class="swiper-pagination-bullet"></span>
     <span class="swiper-pagination-bullet"></span>
   </div>
-  <div class="swiper-button-prev">
+  <div class="swiper-button-prev" onclick="prev()">
     ⬅️
   </div>
-  <div class="swiper-button-next">
+  <div class="swiper-button-next" onclick="next()">
     ➡️
   </div>
 </div>
@@ -406,6 +409,7 @@ flex是一种CSS布局属性，用于在父元素中排列子元素，使其在�
 ```css
 .swiper-container {
   position: relative;
+  height: auto;
   overflow: hidden;
 }
 
@@ -462,6 +466,39 @@ flex是一种CSS布局属性，用于在父元素中排列子元素，使其在�
 
 .swiper-button-next {
   right: 10px;
+}
+```
+```js
+var div = document.querySelector('.swiper-wrapper')
+var bullet = document.querySelector('.swiper-pagination')
+var offset = 0
+var emnu = {
+  '0': 0,
+  '-100': 1,
+  '-200': 2
+}
+div.style.transform = `translateX(${offset}%)`
+function prev() {
+  if(offset == 0) return
+  offsetSwiper(100)
+  bulletActive(emnu[offset])
+  bulletUnActive(emnu[offset - 100])
+}
+function next() {
+  if(offset == -200) return
+  offsetSwiper(-100)
+  bulletActive(emnu[offset])
+  bulletUnActive(emnu[offset + 100])
+}
+function offsetSwiper(n) {
+  offset += n
+  div.style.transform = `translateX(${offset}%)`
+}
+function bulletActive(n) {
+  bullet.children[n].classList.add('swiper-pagination-bullet-active')
+}
+function bulletUnActive(n) {
+  bullet.children[n].classList.remove('swiper-pagination-bullet-active')
 }
 ```
 :::
