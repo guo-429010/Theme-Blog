@@ -329,3 +329,136 @@ grid-area: <grid-row-start> / <grid-column-start> / <grid-row-end> / <grid-colum
 justify-self: start | center | end;
 align-self: start | center | end;
 ```
+## 函数
+### repeat()
+- repeat() 函数表示轨道列表的重复片段，允许以更紧凑的形式写入大量显示重复模式的列或行。
+- 该函数可以用于 CSS Grid 属性中 grid-template-columns 和 grid-template-rows.
+- [更多信息](https://developer.mozilla.org/zh-CN/docs/Web/CSS/repeat)
+```css
+grid-template-columns: 100px 100px 100px;
+grid-template-columns: repeat(3, 100px);
+```
+```css
+grid-template-columns: 150px 100px 100px;
+grid-template-columns: 150px repeat(2, 100px);
+```
+- 根据容器大小自动调节网格数量
+```css
+grid-template-columns: repeat(auto-fill, 100px);
+```
+### minmax()
+- minmax() 函数定义了一个长宽范围的闭区间
+- minmax(<最小值>, <最大值>)
+- 如果 最大值 < 最小值，则最大值被忽略并且 minmax(最小值, 最大值) 被看成最小值
+```css
+grid-template-columns: 100px minmax(100px, 1fr) 100px;
+```
+## 案例
+### 组合排列布局
+::: normal-demo grid-area的使用
+```html
+<div class="main">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+</div>
+```
+```css
+.main {
+    width: 300px;
+    height: 300px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 5px;
+}
+.main div {
+    background-color: indianred;
+}
+.main div:nth-child(1) {
+    background-color: pink;
+    grid-area: 2 / 2 / span 2 / span 2;
+}
+```
+:::
+### 后台布局模板
+::: normal-demo 网格命名与基于线放置
+```html
+<div class="main">
+    <div>header</div>
+    <div>left</div>
+    <div>center</div>
+    <div>right</div>
+    <div>footer</div>
+</div>
+```
+```css
+.main {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 10% 1fr 10%;
+    grid-template-rows: 50px 200px 50px;
+    gap: 10px;
+    /* grid-template-areas: 
+    "header header header"
+    "left center right"
+    "footer footer footer"
+    ; */
+}
+.main div {
+    background-color: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main div:nth-child(1) {
+    /* grid-area: header; */
+    grid-area: 1 / 1 / span 1 / span 3;
+}
+.main div:not(:nth-child(1),:nth-child(5)) {
+    background-color: lightblue;
+}
+.main div:nth-child(5) {
+    /* grid-area: footer; */
+    grid-area: 3 / 1 / span 1 / span 3;
+}
+```
+:::
+### display: inline-grid;的使用
+::: normal-demo 父容器自适应
+```html
+<div class="main">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+    <div>9</div>
+    <div>10</div>
+</div>
+```
+```css
+.main {
+    display: inline-grid;
+    grid-template-columns: 100px;
+    grid-template-rows: repeat(2, 1fr);
+    grid-auto-flow: column;
+    grid-auto-columns: 100px;
+    gap: 10px;
+    padding: 10px;
+    background-color: aquamarine;
+}
+.main div {
+    width: 100px;
+    height: 100px;
+    background-color: pink;
+}
+```
+:::
