@@ -120,7 +120,7 @@ export default hopeTheme(
       articlePerPage: 6
     },
 
-    footer: "赣ICP备2022010645号",
+    footer: `<a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">赣ICP备2022010645号</a>`,
     copyright: "Copyright © 2023 JiuHous",
     displayFooter: true,
 
