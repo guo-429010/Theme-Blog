@@ -51,6 +51,13 @@ export default hopeTheme(
           collapsible: true,
           prefix: "mysql",
           children: "structure"
+        },
+        {
+          text: 'Node',
+          icon: "nodeJS",
+          collapsible: true,
+          prefix: "node",
+          children: "structure"
         }
       ],
       "/front/": [
