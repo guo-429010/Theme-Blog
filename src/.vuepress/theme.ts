@@ -99,6 +99,13 @@ export default hopeTheme(
           collapsible: true,
           prefix: "bing",
           children: "structure"
+        },
+        {
+          text: '问题记录',
+          icon: 'write',
+          collapsible: true,
+          prefix: 'record',
+          children: "structure"
         }
       ]
     },
