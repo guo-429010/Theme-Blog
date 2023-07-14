@@ -41,7 +41,7 @@ const serve = async () => {
     const value2 =  await client.get('测试数据插入002')
     console.log(JSON.parse(value2))
 
-    // 插入map, 如果存在，则插入失败
+    // 插入map
     await client.hSet('测试数据插入003', '测试key', '测试value')
     const value3 = await client.hGetAll('测试数据插入003')
     const value4 = await client.hGet('测试数据插入003', '测试key')
@@ -155,7 +155,7 @@ app.get('/getRedis', async (req, res) => {
 })
 ```
 ![查询结果](../../.vuepress/public/assets/images/redis_02.png)
-### 插入
+### 新增或修改
 ```js
 app.post('/setRedis', async (req,res) => {
     const result = await client.set(req.body.key, req.body.value)
@@ -167,3 +167,49 @@ app.post('/setRedis', async (req,res) => {
 })
 ```
 ![插入结果](../../.vuepress/public/assets/images/redis_03.png)
+### 查询map
+#### 根据key，field查询
+```js
+app.get('/hGetRedis', async (req, res) => {
+    try{
+        const result = await client.hExists(req.query.key, req.query.field)
+        if(result) {
+            const result2 = await client.hGet(req.query.key, req.query.field)
+            res.send(successMsg("查询成功",result2))
+        }else{
+            res.send(errMsg(500,"Redis中没有这个key"))
+        }
+    }catch(err) {
+        res.send(errMsg(999, err.message))
+    }
+})
+```
+![查询结果](../../.vuepress/public/assets/images/redis_04.png)
+#### 根据key查询全部列
+```js
+app.get('/hGetAllRedis', async (req, res) => {
+    try {
+        const result = await client.exists(req.query.key)
+        if(result) {
+            const result = await client.hGetAll(req.query.key)
+            res.send(successMsg("查询成功",result))
+        }else{
+            res.send(errMsg(500,"Redis中没有这个key"))
+        }
+    }catch(err) {
+        res.send(errMsg(999, err.message))
+    }
+})
+```
+![查询结果](../../.vuepress/public/assets/images/redis_06.png)
+### 新增或修改map
+```js
+app.post('/hSetRedis', (req,res) => {
+    client.hSet(req.body.key ,req.body.field ,req.body.value).then(result => {
+        res.send(successMsg('操作成功'))
+    }).catch(err => {
+        res.send(errMsg(999, err.message))
+    })
+})
+```
+![插入结果](../../.vuepress/public/assets/images/redis_05.png)
