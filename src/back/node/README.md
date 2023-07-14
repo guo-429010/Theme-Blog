@@ -9,5 +9,8 @@ tag:
 date: 2023-07-13
 ---
 
+## 基础
+### [node连接redis](redis.md)
+
 ## 实例
 ### [socket.io搭建聊天室](socket.md)
