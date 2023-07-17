@@ -21,8 +21,8 @@ projects:
     desc: 一个具有强大功能的 vuepress 主题
     link: https://theme-hope.vuejs.press/zh/
 
-  - icon: article
-    name: Vue
-    desc: 渐进式JavaScript框架
-    link: https://cn.vuejs.org/guide/introduction.html
+  - icon: mini-app
+    name: 小程序
+    desc: 自己开发的一款查看文章、在线聊天的小程序
+    link: https://guo123.top/api/image/file/WXXCX.png
 ---
