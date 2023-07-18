@@ -4,6 +4,7 @@ category:
   - 工具
 tag:
   - 前端构建工具
+  - vite
 date: 2023-07-10
 ---
 

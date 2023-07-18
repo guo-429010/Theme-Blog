@@ -9,4 +9,5 @@ tag:
 date: 2023-06-02
 ---
 
-## 这里是vue
+## demo
+### [自动生成路由](createViteRouter.md)
