@@ -17,6 +17,106 @@ date: 2023-06-02
 ## ECMAScript2019(ES10)
 ## ECMAScript2020(ES11)
 ## ECMAScript2021(ES12)
+### String.prototype.replaceAll
+- 全部替换目标值
+```js
+const a = "ancdaaa"
+a.replaceAll('a','新') // '新ncd新新新'
+```
+### Promise.any
+- Promise.any() 静态方法将一个 Promise 可迭代对象作为输入，并返回一个 Promise。
+- 当输入的任何一个 Promise 兑现时，这个返回的 Promise 将会兑现，并返回第一个兑现的值。
+```js
+const pErr = new Promise((resolve, reject) => {
+  reject("总是失败");
+});
+
+const pSlow = new Promise((resolve, reject) => {
+  resolve("pSlow成功");
+});
+
+const pFast = new Promise((resolve, reject) => {
+  resolve("pFast成功");
+});
+
+Promise.any([pErr, pSlow, pFast]).then((value) => {
+  console.log(value);
+})
+
+// pSlow成功
+```
+- 当所有输入 Promise 都被拒绝（包括传递了空的可迭代对象）时，它会以一个包含拒绝原因数组的 AggregateError 拒绝。
+```js
+const pErr = new Promise((resolve, reject) => {
+  reject("总是失败");
+});
+
+const pSlow = new Promise((resolve, reject) => {
+  reject("总是失败");
+});
+
+const pFast = new Promise((resolve, reject) => {
+  reject("总是失败");
+});
+
+Promise.any([pErr, pSlow, pFast]).then((value) => {
+  console.log(value);
+}).catch((err) => {
+    console.log(err.errors)
+})
+
+// ['总是失败', '总是失败', '总是失败']
+```
+### 新的逻辑运算符
+- 逻辑空赋值( x ??= y ) 仅在 x 是空值时对其赋值
+```js
+var a = null
+var b = 20
+a ??= b // 20
+```
+- 逻辑与赋值( x &&= y ) 仅在 x 为真值时为其赋值
+```js
+let a = 1
+let b = 0
+a &&= 99
+console.log(a) // 99
+b &&= 100
+console.log(b) // 0
+```
+- 逻辑或赋值( x ||= y ) 仅在x为假值是为其赋值
+```js
+let a = 0
+let b = 1
+a ||= 99 // 99
+b ||= 100 // 1
+```
+### 数字分割符
+```js
+const num = 1_000_000_000 // 1000000000
+```
+### 弱引用和垃圾回收监听
+- deref方法返回实例的目标对象，如果目标对象已被垃圾回收，则返回undefined。
+```js
+const target = {
+  key: "value"
+}
+const ref = new WeakRef(target)
+ref.deref()
+// {key: 'value'}
+```
+- FinalizationRegistry 在对象被垃圾回收时执行回调
+```js
+const obj = new FinalizationRegistry(heldValue => {
+  console.log(heldValue);
+});
+
+/**
+ * target 目标对象
+ * heldValue 回调时可以读取到的值，类型不限
+ * unregisterToken 可选，取消监听的引用, 一般可以放目标对象
+ */
+obj.register(target, heldValue, [unregisterToken])
+```
 ## ECMAScript2022(ES13)
 ### 正则表达式匹配索引
 添加了一个特殊的标志 d，通过使用它，正则表达式 API 将返回一个二维数组作为名索引的键。它包含每个匹配项的开始和结束索引。如果在正则表达式中捕获了任何命名组，它将在 indices.groups 对象中返回它们的开始/结束索引， 命名的组名将是它的键。

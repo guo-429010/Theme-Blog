@@ -155,6 +155,6 @@ for(let [path, meta] of sortPages.entries()) {
 }
 ```
 ### 文件结构
-![routes](../../.vuepress/public/assets/images/vue_006.png)
+![文件结构](../../.vuepress/public/assets/images/vue_006.png)
 ### 生成效果
-![routes](../../.vuepress/public/assets/images/vue_007.png)
+![路由结构](../../.vuepress/public/assets/images/vue_007.png)
