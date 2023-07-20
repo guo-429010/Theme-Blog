@@ -9,5 +9,8 @@ tag:
 date: 2023-06-02
 ---
 
+## 基础
+### [使用组件](component.md)
+
 ## demo
-### [自动生成路由](createViteRouter.md)
+### [vite自动生成路由](createViteRouter.md)
