@@ -11,6 +11,13 @@ date: 2023-06-02
 - ECMAScript 是 JavaScript 语言的规则
 - 2015年正式发布的ECMAScript6（2015）已经成为了JavaScript这门语言的下一代标准
 ## ECMAScript2015(ES6)
+### 模板字符串
+- 一个用模板字符串输出随机颜色的示例
+```js
+const randomColor = () => {
+  return `#${Math.floor(Math.random() * 0xffffff).toString(16)}`
+}
+```
 ## ECMAScript2016(ES7)
 ## ECMAScript2017(ES8)
 ## ECMAScript2018(ES9)
