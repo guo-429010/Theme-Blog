@@ -126,6 +126,7 @@ export default hopeTheme(
       roundAvatar: true,
       name: "JiuHous",
       description: "未觉池塘春草梦，阶前梧叶已秋声。",
+      timeline: '从初识灵感的那一刻，到字句斟酌的反复推敲，再到最终破壳而出的作品，每个瞬间都充满了无尽的的可能和瑰丽。犹如一部文艺电影，细节丰富，情节跌宕，让人陶醉。让我们一起用时间书写，用情感酝酿，用文字铭记，那些独一无二的时刻。',
       medias: {
         Gitee: "https://gitee.com/guo567",
         GitHub: "https://github.com/guo-429010",

@@ -4,12 +4,15 @@ category:
   - Vue
 tag:
   - 组件
+  - props
+  - emit
+  - 插槽
 date: 2023-07-20
 ---
 
 ## 起步
 ### 创建
-- vue
+- vue2
 ```vue
 <template>
   <div>
@@ -27,6 +30,26 @@ export default {
 }
 </script>
 ```
+- vue3
+```vue
+<script setup>
+defineProps({
+    num: {
+        required: true,
+        type: Number,
+        validator(value) {
+            return value > 99
+        }
+    }
+})
+</script>
+
+<template>
+  <div>
+    传入的num为：{{ num }}
+  </div>
+</template>
+```
 - js
 ```js
 export default { 
@@ -41,6 +64,7 @@ export default {
 }
 ```
 ### 使用
+- vue2
 ```vue
 <template>
   <div id="app">
@@ -57,6 +81,18 @@ export default {
   }
 }
 </script>
+```
+- vue3
+```vue
+<script setup>
+import MyComponent from '../../components/MyComponent.vue';
+</script>
+
+<template>
+  <div>
+    <my-component :num="100"/>
+  </div>
+</template>
 ```
 ### 全局注册
 - vue3
@@ -213,4 +249,74 @@ style="font-size: 20px;"
 	父组件传的值 
 	<button>按钮</button>
 </div>
+```
+
+## 事件
+### 声明
+- vue3
+```vue
+<script setup>
+const emit = defineEmits([
+  'myClick'
+])
+
+const handleEmit = () => {
+  emit('myClick', "点击了子组件")
+}
+</script>
+```
+- vue2
+```js
+this.$emit('myClick', 100)
+```
+### 监听
+- vue3
+```vue
+<script setup>
+import MyComponent from '../../components/MyComponent.vue';
+
+const myClick = e => {
+  console.log(e)
+}
+</script>
+
+<template>
+  <div>
+    <my-component :num="100" @my-click="myClick"/>
+  </div>
+</template>
+```
+- vue2
+```vue
+<template>
+  <div>
+    // vue2中事件不支持自动化的大小写转换，不能写成 @my-click
+    <Test :my-num="999" @myClick="emitClick"/>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    emitClick(e) {
+      console.log(e)
+    }
+  }
+}
+</script>
+```
+### 校验
+```js
+const emit = defineEmits({
+  // 不需要校验
+  click: null,
+  // 校验值是否存在
+  myClick: (val) => {
+    if(val) {
+      return true
+    }else{
+      return false
+    }
+  }
+})
 ```
