@@ -320,3 +320,135 @@ const emit = defineEmits({
   }
 })
 ```
+
+## 双向绑定
+### v-model的参数
+- vue2
+```vue
+<MyComponents v-model="isShow" />
+```
+```vue
+<template>
+  <div>
+    {{ value }}
+    <button @click="$emit('input',false)">++</button>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ['value']
+}
+</script>
+```
+- vue3
+```vue
+<MyComponents v-model="isShow" />
+```
+```vue
+<script setup>
+defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
+const close = () => {
+  emit('update:modelValue', false)
+}
+</script>
+
+<template>
+  <div>
+    {{ modelValue }}
+    <button @click="close">关闭</button>
+  </div>
+</template>
+```
+### 多个v-model
+```vue
+<Counter v-model:count1="count1" v-model:count2="count2"/>
+```
+```vue
+<script setup>
+import { computed } from "vue"
+
+const props = defineProps(['count1', 'count2'])
+const emit = defineEmits(['update:count1', 'update:count2'])
+
+const num1 = computed({
+  get() {
+    return props.count1
+  },
+  set(value) {
+    emit('update:count1', value)
+  }
+})
+
+const num2 = computed({
+  get() {
+    return props.count2
+  },
+  set(value) {
+    emit('update:count2', value)
+  }
+})
+
+const update1 = () => {
+  num1.value++
+}
+const update2 = () => {
+  num2.value++
+}
+</script>
+
+<template>
+  <div>
+    {{ num1 }} || {{ num2 }}
+    <button @click="update1">修改count1的值</button>
+    <button @click="update2">修改count2的值</button>
+  </div>
+</template>
+```
+### v-model修饰符
+```vue
+<MyComponents v-model.capitalize="isShow" />
+```
+```vue
+<script setup>
+const props = defineProps({
+  modelValue: Boolean,
+  modelModifiers: {
+    default: () => ({})
+  }
+})
+console.log(props.modelModifiers) // {capitalize: true}
+
+const emit = defineEmits(['update:modelValue'])
+
+function initVal() {
+  if(props.modelModifiers.capitalize) {
+    // 执行相关操作
+    value = xxxx
+  }
+  emit('update:modelValue', value)
+}
+</script>
+```
+### 带参数的修饰符
+```vue
+<UserName
+  v-model:first-name.capitalize="first"
+  v-model:last-name.uppercase="last"
+/>
+```
+```vue
+<script setup>
+const props = defineProps({
+  firstName: String,
+  lastName: String,
+  firstNameModifiers: { default: () => ({}) },
+  lastNameModifiers: { default: () => ({}) }
+})
+
+console.log(props.firstNameModifiers) // { capitalize: true }
+console.log(props.lastNameModifiers) // { uppercase: true}
+</script>
+```
