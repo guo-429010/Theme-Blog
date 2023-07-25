@@ -434,10 +434,7 @@ function initVal() {
 ```
 ### 带参数的修饰符
 ```vue
-<UserName
-  v-model:first-name.capitalize="first"
-  v-model:last-name.uppercase="last"
-/>
+<UserName v-model:first-name.capitalize="first" v-model:last-name.uppercase="last" />
 ```
 ```vue
 <script setup>
@@ -449,6 +446,171 @@ const props = defineProps({
 })
 
 console.log(props.firstNameModifiers) // { capitalize: true }
-console.log(props.lastNameModifiers) // { uppercase: true}
+console.log(props.lastNameModifiers) // { uppercase: true }
 </script>
+```
+## 插槽
+### 设置插槽
+- slot 元素是一个插槽出口 (slot outlet)，标示了父元素提供的插槽内容 (slot content) 将在哪里被渲染
+```vue
+<button>
+  <slot></slot>
+</button>
+```
+- 使用
+```vue
+<FancyButton>
+  自定义按钮文字
+</FancyButton>
+```
+- 最终结果
+```html
+<button> 自定义按钮文字 </button>
+```
+### 作用域
+- 插槽内容可以访问到父组件的数据作用域，因为插槽内容本身是在父组件模板中定义的
+- 插槽内容无法访问子组件的数据
+- Vue 模板中的表达式只能访问其定义时所处的作用域
+### 默认内容
+- 在外部没有提供任何内容的情况下，可以为插槽指定默认内容
+- 父组件提供内容则取代默认内容
+```vue
+<button>
+  <slot>
+    默认描述文字
+  </slot>
+</button>
+```
+### 具名插槽
+- 带 name 的插槽被称为具名插槽 (named slots)。没有提供 name 的 ```<slot>``` 出口会隐式地命名为“default”
+- 要为具名插槽传入内容，需要使用一个含 v-slot 指令的 ```<template>``` 元素，并将目标插槽的名字传给该指令：
+- v-slot 有对应的简写 ```#```，因此 ```<template v-slot:header>``` 可以简写为 ```<template #header>```
+子组件的模板结构
+```vue
+<template>
+  <div>
+    <header>
+        <slot name="header"></slot>
+    </header>
+    <main>
+        <slot></slot>
+    </main>
+    <footer>
+        <slot name="footer"></slot>
+    </footer>
+  </div>
+</template>
+```
+父组件使用
+```vue
+<Component>
+  <template v-slot:header>
+    这里是头部
+  </template>
+    这里是内容
+  <template v-slot:footer>
+    这里是底部
+  </template>
+</Component>
+```
+渲染结果
+```html
+<div>
+  <header> 
+    这里是头部 
+  </header>
+  <main> 
+    这里是内容 
+  </main>
+  <footer> 
+    这里是底部 
+  </footer>
+</div>
+```
+### 作用域插槽
+- 可以像对组件传递 props 那样，向一个插槽的出口上传递 attributes, 让子组件在渲染时将一部分数据提供给插槽
+```vue
+<div>
+  <slot v-for="item in list" :item="item" />
+</div>
+```
+- 通过子组件标签上的 v-slot 指令，直接接收到了一个插槽 props 对象：
+```vue
+<Component v-slot="slotProps">
+  <p>{{ slotProps.item }}</p>
+</Component>
+```
+- 可以使用解构
+```vue
+<Component v-slot="{ item }">
+  <p>{{ item }}</p>
+</Component>
+```
+### 具名作用域插槽
+- 向具名插槽中传入 props：
+```vue
+<div>
+  <slot name="header" message="我来组成顶部" />
+  <slot message="我来组成内容" />
+  <slot name="footer" message="我来组成底部" />
+</div>
+```
+- 同时使用了具名插槽与默认插槽，则需要为默认插槽使用显式的 ```<template>``` 标签
+```vue
+<Component>
+  <template #header="headerProps">
+    {{ headerProps }}
+  </template>
+
+  <template #default="defaultProps">
+    {{ defaultProps }}
+  </template>
+
+  <template #footer="{ message }">
+    {{ message }}
+  </template>
+</Component>
+```
+### 异步组件
+- defineAsyncComponent方法接收一个返回 Promise 的加载函数
+- 组件将在五秒后出现
+```js
+app.component('HelloComponent', defineAsyncComponent(() => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(import('./components/Dialog.vue'))
+    }, 5000)
+  })
+}))
+```
+- 父组件定义
+```js
+import { defineAsyncComponent } from 'vue';
+const HelloComponent = defineAsyncComponent(() => 
+  import('../../components/Dialog.vue')
+)
+```
+- 全局注册
+```js
+app.component('HelloComponent', defineAsyncComponent(() => 
+  import('./components/Dialog.vue')
+))
+```
+- 加载与错误状态
+```js
+const AsyncComp = defineAsyncComponent({
+  // 加载函数
+  loader: () => import('./Foo.vue'),
+
+  // 加载异步组件时使用的组件
+  loadingComponent: LoadingComponent,
+  // 展示加载组件前的延迟时间，默认为 200ms
+  delay: 200,
+
+  // 加载失败后展示的组件
+  errorComponent: ErrorComponent,
+  // 如果提供了一个 timeout 时间限制，并超时了
+  // 也会显示这里配置的报错组件，默认值是：Infinity
+  timeout: 3000
+})
 ```
