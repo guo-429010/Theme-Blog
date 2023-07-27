@@ -14,6 +14,7 @@ date: 2023-06-02
 ### [自定义指令](directives.md)
 ### [Teleport传送门](teleport.md)
 ### [render函数](render.md)
+### [插件](plugins.md)
 
 ## demo
 ### [vite自动生成路由](createViteRouter.md)

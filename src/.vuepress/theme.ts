@@ -70,6 +70,13 @@ export default hopeTheme(
           children: "structure"
         },
         {
+          text: 'React',
+          icon: 'react',
+          collapsible: true,
+          prefix: "react",
+          children: "structure"
+        },
+        {
           text: 'JavaScript',
           icon: "javascript",
           collapsible: true,
