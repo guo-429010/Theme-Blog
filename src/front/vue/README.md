@@ -15,6 +15,7 @@ date: 2023-06-02
 ### [Teleport传送门](teleport.md)
 ### [render函数](render.md)
 ### [插件](plugins.md)
+### [组合式API](composition.md)
 
 ## demo
 ### [vite自动生成路由](createViteRouter.md)
