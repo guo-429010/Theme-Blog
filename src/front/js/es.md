@@ -11,6 +11,270 @@ date: 2023-06-02
 - ECMAScript 是 JavaScript 语言的规则
 - 2015年正式发布的ECMAScript6（2015）已经成为了JavaScript这门语言的下一代标准
 ## ECMAScript2015(ES6)
+### 作用域
+:::tip 作用域链
+- 任何一个作用域链都是一个堆栈，首先先把全局作用域压入栈底，再按照函数的嵌套关系一次压入堆栈
+- 在执行的时候就按照这个作用域链寻找变量
+:::
+- 全局作用域：```global/window```
+  - 变量在函数或者代码块 {} 外定义，即为全局作用域 
+  - 在函数或者代码块 {} 内未定义的变量也是拥有全局作用域的
+- 函数作用域（局部作用域）：```function```
+  - 在函数内部定义的变量，就是局部作用域
+  - 函数作用域内，对外是封闭的，从外层的作用域无法直接访问函数内部的作用域
+- 块状作用域：```{}```
+  - ```{}```里面的变量就是拥有这个块状作用域,```{}```之外无法访问
+- 动态作用域：```this```
+  - 只能在执行阶段才能决定变量的作用域
+### let
+- 不属于顶层对象window
+- 不允许重复声明
+- 不存在变量提升
+- 暂时性死区
+  - 如果区块中存在 ```let``` 和 ```const``` 命令，这个区块对这些命令声明的变量，从一开始就形成了封闭作用域
+  - 凡是在声明之前就使用这些变量，就会报错
+```js
+var a = 5
+if (true) {
+    a = 6
+    let a
+}
+// Uncaught ReferenceError: Cannot access 'a' before initialization
+```
+- 块级作用域
+### const
+- 具有 ```let``` 的特性
+- 声明的是常量，不可被修改
+  - ```const``` 实际上保证的并不是变量的值不得改动，而是变量指向的那个内存地址所保存的数据不得改动
+  - 基本数据类型存储在 ```栈内存``` 中，引用数据类型存储在 ```堆内存``` 中然后在栈内存中保存 引用地址
+::: tip es5中定义常量的方法
+```js
+Object.defineProperty(window, 'a', {
+    value: 1,
+    writable: false
+})
+a = 999
+console.log(a) // 1
+```
+:::
+### 解构赋值
+- 数组
+```js
+let [a,b,c] = [1,2,3]
+
+// ...接受赋值数组的剩余元素
+let [name,age,...other] = ["ggb","18","爱吃超级棒棒糖","死猪"]
+console.log(name,age,other) // ggb 18 ['爱吃超级棒棒糖', '死猪']
+
+// 赋予默认值
+let [name = "猪猪侠", age = 18] = ["GGB"]
+console.log(name,age) // GGB 18
+```
+- 对象
+```js
+let user = {
+    name: '猪猪侠',
+    age: 18,
+    nickname: 'GGB'
+}
+
+let {name,age,nickname} = user
+console.log(name,age,nickname) // 猪猪侠 18 GGB
+
+// 自定义变量名
+let {name: n} = user
+console.log(n) // 猪猪侠
+
+// 默认值
+let {name = '猪', msg = "我是GGB"} = user
+console.log(name, msg) // 猪猪侠 我是GGB
+
+// ...剩余元素
+let {name, ...other} = user
+console.log(name, other) // 猪猪侠 {age: 18, nickname: 'GGB'}
+```
+- 字符串
+```js
+let str = 'Java'
+let [s1,...s2] = str
+console.log(s1,s2) // J ['a', 'v', 'a']
+```
+### Array.map()
+- 返回新的数组，每个元素为调用方法后的结果
+```js
+let arr = [1,2,3,4,5]
+let result = arr.map(item => item + 1) // [2,3,4,5,6]
+```
+### Array.filter()
+- 返回符合函数条件的元素数组
+```js
+let arr = [{name: "GGB"},{name: "XDD"}]
+let result = arr.filter(item => item.name == "GGB") // [{name: "GGB"}]
+```
+### Array.some()
+- 返回```Boolean```，判断是否有元素符合条件
+```js
+let arr = [1,2,3]
+let result = arr.some(item => item == 1) // true
+```
+### Array.every()
+- 返回```Boolean```，判断每个元素是否都符合条件
+```js
+let arr = [{name: 'GGB',age: 18},{name: 'XDD',age: 18}]
+let result = arr.every(item => item.age == 18) // true
+```
+### Array.reduce()
+- 对数组中的每个元素按序执行一个提供的 reducer 函数，每一次运行 reducer 会将先前元素的计算结果作为参数传入，最后将其结果汇总为单个返回值
+- reduce(callbackFn, initialValue) 第二个值可选，作为prev的值，否则以arr[0]作为值
+```js
+// 计算所有元素的总和
+let arr = [1,2,3,4,5]
+let sum = arr.reduce(function(prev, cur, index, array) {
+    return prev + cur
+}, 0)
+console.log(sum) // 15
+```
+### Array.from()
+- 从可迭代或类数组对象创建一个新的浅拷贝的数组实例
+- Array.from(arrayLike, mapFn, thisArg)
+  -  ```arrayLike``` 想要转换成数组的类数组或可迭代对象
+  -  ```mapFn``` (可选) (e,index) => {}
+  -  ```thisArg``` (可选) 执行 mapFn 时用作 this 的值
+```js
+// 字符串转数组，并字母转大写
+const newArray = Array.from('Java',item => item.toUpperCase())
+newAarray // ['J', 'A', 'V', 'A']
+// 初始化一个长度为5的数组，元素都为1
+Array.from({length: 5},() => 1) // [1,1,1,1,1]
+```
+### Array.of()
+- 创建一个具有可变数量参数的新数组实例，而不考虑参数的数量或类型
+```js
+Array.of('foo', 2, 'bar', true) // ["foo", 2, "bar", true]
+```
+### Array.prototype.fill()
+- 用一个固定值填充一个数组中从起始索引到终止索引内的全部元素
+- arr.fill(value,start,end) // 用来填充的值，起始下标，终止下标（默认为数组length）
+```js
+let arr = [1,2,3]
+arr.fill(99,1,2) // [1,99,2]
+arr.fill(100) // [100,100,100]
+```
+### Array.prototype.find()
+- 返回数组中满足条件的第一个元素的值，否则返回 undefined
+```js
+let arr = [1,3,5,7,9]
+arr.find(item => item > 4) // 5
+```
+### Array.prototype.findIndex()
+- 返回数组中满足条件的第一个元素的下标，否则返回 -1
+```js
+let arr = [1,3,5,7,9]
+arr.findIndex(item => item > 4) // 2 
+```
+### Array.prototype.copyWithin()
+- 将指定位置的成员复制到其他位置（会覆盖原有成员），然后返回当前数组
+- arr.copyWithin(target, start, end)
+  - target 开始替换数据
+  - start 开始读取数据 默认 0
+  - end 停止读取 默认等于数组长度
+```js
+let arr = [1,3,5,7,9]
+arr.copyWithin(0,3,5) // [7, 9, 5, 7, 9]
+```
+### ```Object.is()```
+- 判断两个对象是否相等
+```js
+let obj1 = {a: 1}
+let obj2 = {a: 1}
+console.log(Object.is(obj1,obj2)) // false
+let obj3 = obj1
+console.log(Object.is(obj1,obj3)) // true
+```
+### Object.assign()
+- 将所有可枚举属性的值从一个或多个源对象复制到目标对象，它将返回目标对象
+- Object.assign(目标对象, ...源对象)
+- 对于引用数据类型属于浅拷贝
+```js
+const obj1 = {
+    a: 1,
+    b: 2
+}
+const obj2 = {
+    a: 5,
+    b: 10,
+    c: 12
+}
+const obj3 = {
+    d: 14
+}
+const newObj = Object.assign(obj1, {...obj2,...obj3})
+// {a: 5, b: 10, c: 12, d: 14}
+```
+### 对象遍历
+```js
+let obj = {name: 'GGB', age: 18}
+
+for(let key in obj) {
+    console.log(key, obj[key])
+}
+
+Object.keys(obj) // ['name', 'age']
+Object.getOwnPropertyNames(obj) // ['name', 'age']
+Reflect.ownKeys(obj) // ['name', 'age']
+```
+### Symbol
+- 新的原始数据类型 ```Symbol``` ，表示独一无二的值
+#### 声明方式
+```js
+let s = Symbol()
+typeof s // 'symbol'
+
+let s1 = Symbol()
+let s2 = Symbol()
+
+s1 === s2 // false
+```
+#### Symbol.for()
+- 接受一个字符串作为参数，然后搜索有没有以该参数作为名称的 Symbol 值。如果有，就返回这个 Symbol 值，否则就新建一个以该字符串为名称的 Symbol 值，并将其注册到全局
+```js
+let s1 = Symbol.for('ggb')
+let s2 = Symbol.for('ggb')
+s1 === s2 // true
+```
+::: warning 区别
+- Symbol.for()与Symbol()这两种写法，都会生成新的 Symbol
+- 前者会被登记在全局环境中供搜索，后者不会
+:::
+#### Symbol.keyFor()
+- 返回一个已登记的 Symbol 类型值的key
+```js
+let s1 = Symbol('ggb')
+Symbol.keyFor(s1) // undefined
+let s2 = Symbol.for('ggb')
+Symbol.keyFor(s2) // 'ggb'
+```
+#### 消除魔术字符串
+```js
+const shapeType = {
+    triangle: Symbol(),
+    circle: Symbol()
+}
+
+function getArea(shape) {
+    let area = 0
+    switch (shape) {
+        case shapeType.triangle:
+            area = 1
+            break
+        case shapeType.circle:
+            area = 2
+            break
+    }
+    return area
+}
+console.log(getArea(shapeType.triangle))
+```
 ### 模板字符串
 - 一个用模板字符串输出随机颜色的示例
 ```js
