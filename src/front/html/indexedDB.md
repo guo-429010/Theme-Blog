@@ -238,3 +238,102 @@ function update() {
     }
 }
 ```
+
+## 结合localforage
+### 创建仓库
+```js
+import localforage from 'localforage';
+
+const store = localforage.createInstance({
+  name: 'file'
+})
+```
+### 删除仓库
+```js
+const delStore = async () => {
+  try {
+    await localforage.dropInstance({
+      name: 'file'
+    })
+    console.log('删除仓库成功')
+  } catch (error) {
+    console.error(error)
+  }
+}
+```
+### 新增数据
+- reactive定义的数据需要转为原始数据
+```js
+import { reactive,toRaw } from 'vue'
+
+const form = reactive({
+  name: '',
+  age: ''
+})
+
+const add = async () => {
+  try {
+    await store.setItem(form.name, toRaw(form))
+    form.name = ''
+    form.age = ''
+  } catch (error) {
+    console.error(error)
+  }
+}
+```
+### 根据key删除数据
+```js
+const del = async () => {
+  if(!form.name) return
+  try {
+    await store.removeItem(form.name)
+    console.log('删除成功')
+  } catch (error) {
+    console.error(error)
+  }
+}
+```
+### 删除所有数据
+```js
+const clear = async () => {
+  try {
+    await store.clear()
+    console.log('删除所有数据成功')
+  } catch (error) {
+    console.error(error)
+  }
+}
+```
+### 获取key的数量
+```js
+const getKey = async () => {
+  try {
+    const res = await store.length()
+    console.log(res)
+  } catch (error) {
+    console.error(error)
+  }
+}
+```
+### 获取所有key
+```js
+const getKeys = async () => {
+  try {
+    const res = await store.keys()
+    console.log(res)
+  } catch (error) {
+    console.error(error)
+  }
+}
+```
+### 迭代所有数据
+```js
+const obj = {}
+const iterate = () => {
+  store.iterate((value,key,iterationNumber ) => {
+    obj[key] = value
+  }).finally(() => {
+    console.log(obj)
+  })
+}
+```
