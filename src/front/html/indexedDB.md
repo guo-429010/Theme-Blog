@@ -330,7 +330,7 @@ const getKeys = async () => {
 ```js
 const obj = {}
 const iterate = () => {
-  store.iterate((value,key,iterationNumber ) => {
+  store.iterate((value,key,iterationNumber) => {
     obj[key] = value
   }).finally(() => {
     console.log(obj)
