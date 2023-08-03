@@ -281,6 +281,19 @@ const add = async () => {
   }
 }
 ```
+### 根据key获取数据
+```js
+const get = async () => {
+  if(!form.name) return
+  const res = await store.getItem(form.name)
+  if(res){
+    form.name = res.name
+    form.age = res.age
+  }else{
+    console.error('key不存在')
+  }
+}
+```
 ### 根据key删除数据
 ```js
 const del = async () => {
