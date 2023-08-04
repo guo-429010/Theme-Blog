@@ -1,6 +1,8 @@
 import { defineUserConfig } from "vuepress";
 import { getDirname, path } from "@vuepress/utils";
 import { searchProPlugin } from "vuepress-plugin-search-pro";
+import { popperPlugin } from './plugins/vuepress-plugin-popper';
+import { PopperShape } from "@moefy-canvas/theme-popper";
 import theme from "./theme.js";
 
 const _dirname = getDirname(import.meta.url)
@@ -26,6 +28,13 @@ export default defineUserConfig({
     searchProPlugin({
       indexContent: true,
       autoSuggestions: true
+    }),
+    popperPlugin({
+      config: {
+        shape: PopperShape.Star,
+        size: 2,
+        numParticles: 36,
+      }
     })
   ]
 });

@@ -9,13 +9,13 @@
 }
 
 // 主页标题
-.blog-hero h1 {
+.vp-blog-hero-title {
     @include titleStyle(3rem, 6px);
     text-shadow: 2px 2px 1px #ffffff46;
 }
 
 // 导航栏标题
-.navbar .site-name {
+.vp-site-name {
     font-weight: 700;
     @include titleStyle(22px, 3px);
 }
@@ -23,4 +23,13 @@
 // 一言文字
 .hitokoto-text span {
     font-family: fangsong;
+}
+
+.blog-page-wrapper, .vp-blog-mask, .vp-sidebar, .theme-hope-content div, img, .giscus-wrapper, .vp-page-nav {
+    z-index: 2;
+}
+
+.vp-footer-wrapper{
+    border-top: none;
+    background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
 }

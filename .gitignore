@@ -3,5 +3,5 @@ node_modules
 .temp
 dist
 .idea
-autorun.sh
+upload.sh
 package-lock.json
