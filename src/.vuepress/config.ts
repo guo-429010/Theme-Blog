@@ -3,6 +3,7 @@ import { getDirname, path } from "@vuepress/utils";
 import { searchProPlugin } from "vuepress-plugin-search-pro";
 import { popperPlugin } from './plugins/vuepress-plugin-popper';
 import { PopperShape } from "@moefy-canvas/theme-popper";
+import { bgPlugin } from './plugins/vuepress-plugin-bg'
 import theme from "./theme.js";
 
 const _dirname = getDirname(import.meta.url)
@@ -35,6 +36,7 @@ export default defineUserConfig({
         size: 2,
         numParticles: 36,
       }
-    })
+    }),
+    bgPlugin()
   ]
 });
