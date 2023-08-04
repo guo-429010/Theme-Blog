@@ -6,7 +6,7 @@ export default defineClientConfig({
         onMounted(() => {
             const img = document.createElement('img');
             img.src = '/assets/sea-wave.svg'
-            img.style.cssText = "position:fixed;left:0;bottom:0;z-index:1;width:100%;height:auto;pointer-events:none;"
+            img.style.cssText = "position:fixed;left:0;bottom:0;z-index:1;width:100vw;height:40vh;object-fit: cover;pointer-events:none;"
             document.body.appendChild(img)
         })
     }
