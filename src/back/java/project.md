@@ -201,9 +201,10 @@ public R getFileByName(@RequestParam("name") String name){
 public List<FileDto> getFileByName(String name) {
     File directory = new File(fileBackUrl);
     List<FileDto> list = directoryResolve(directory,new ArrayList<>());
-    return list.stream()
-            .filter(fileDto -> fileDto.getFileName().contains(name))
-            .collect(Collectors.toList());
+    return list.stream().filter(fileDto -> {
+                String[] str = fileDto.getFileName().split("\\\\");
+                return str[str.length - 1].contains(name);
+            }).collect(Collectors.toList());
 }
 
 public List<FileDto> directoryResolve(File directory, List<FileDto> list) {
