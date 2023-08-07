@@ -11,6 +11,7 @@ date: 2023-06-02
 
 ## 基础
 ### [ECMAScript](es.md)
+### <HopeIcon icon="/assets/icon/typescript.png" />  [TypeScript](TypeScipt.md)
 ## 实例
 ### [聊天功能](userChat.md)
 ### [基于socket.io的聊天室](socketDemo.md)

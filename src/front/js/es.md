@@ -275,6 +275,102 @@ function getArea(shape) {
 }
 console.log(getArea(shapeType.triangle))
 ```
+### Class
+#### 声明类
+```js
+class User {
+  constructor(name) {
+    this.name = name
+  }
+}
+
+const user = new User("Hello")
+```
+#### get set
+```js
+class User {
+  constructor(name) {
+    this.name = name
+  }
+  get Name(){
+    console.log("查询名字")
+    return this.name
+  }
+  set Name(val) {
+    console.log("修改名字")
+    this.name = val
+  }
+}
+```
+#### 静态方法
+```js
+class User {
+  constructor(name) {
+    this.name = name
+  }
+  static getUser() {}
+}
+```
+#### 继承
+```js
+class User {
+  constructor(name) {
+    this.name = name
+  }
+}
+
+class Admin extends User {
+  constructor(name, age) {
+    super(name)
+    this.age = age
+  }
+}
+```
+### Set
+- 创建  
+  - ```let s = new Set()```
+- 添加数据  
+  - ```s.add('hello')``` 
+  - 添加重复的数据是无效的
+- 删除数据 
+  - ```s.delete('hello')```
+  - ```s.clear()```
+- 判断数据是否存在
+  - ```s.has('hello')```
+- 数据总数
+  - ```s.size```
+### WeakSet
+- 和 ```Set``` 类似，不同点:
+  - 存储的值只能是对象
+  - 没有size属性
+  - 不能遍历
+### Map
+- 创建
+  - ```let map = new Map()```
+- 添加数据
+  - ```map.set('name', 'hello')```
+  - key可以是任意值，函数/对象/基本类型
+- 删除数据
+  - ```map.delete('name')```
+- 判断数据是否存在
+  - ```map.has('name')```
+- 获取数据
+  - ```map.get('name')```
+- 数据总数
+  - ```map.size```
+### WeakMap
+- 和 ```Map``` 类似，不同点:
+  - 存储的健只能是对象
+- 创建
+  - ```let wkMap = new WeakMap()```
+- 添加数据
+  - ```wkMap.set(obj, 'hello')```
+- 查询数据
+  - ```wkMap.get(obj)```
+- 删除数据
+  - ```wkMap.delete(obj)```
+- 判断数据是否存在
+  - ```wkMap.has(obj)```
 ### 模板字符串
 - 一个用模板字符串输出随机颜色的示例
 ```js
@@ -282,6 +378,41 @@ const randomColor = () => {
   return `#${Math.floor(Math.random() * 0xffffff).toString(16)}`
 }
 ```
+### 字符串扩展
+- ```String.fromCodePoint()```
+  - 返回使用指定的代码点序列创建的字符串
+  - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/fromCodePoint)
+- ```String.includes()```
+  - 判断是否包含目标字符串
+  - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/includes)
+- ```String.startsWith()```
+  - 判断是否以目标字符串开头
+  - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith)
+- ```String.endsWith()```
+  - 判断是否以目标字符串结尾
+  - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith)
+- ```String.repeat()```
+  - 重复字符串
+  - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/repeat)
+### Number扩展
+- 二进制和八进制
+  - ```0B``` 前缀表示二进制  
+  - ```0O``` 前缀表示八进制
+- ```Number.isFinite()```
+  - 判断是否为有限数
+  - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite)
+- ```Number.isNaN()```
+  - 判断是否为NaN
+  - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN)
+- ```Number.parseInt()```
+  - 解析整数
+  - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/parseInt)
+- ```Number.parseFloat()```
+  - 解析浮点数
+  - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/parseFloat)
+- ```Number.isInteger()```
+  - 判断是否为整数
+  - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger)
 ## ECMAScript2016(ES7)
 ## ECMAScript2017(ES8)
 ## ECMAScript2018(ES9)
