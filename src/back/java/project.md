@@ -19,7 +19,7 @@ date: 2023-07-31
 Collection<File> files = FileUtils.listFiles(new File(url), null, true);
 ```
 
-## 文件夹操作Controller层
+## 初步示例
 - ```getFiles()``` 方法用来查询文件夹下的所有文件
 ```java
 @RestController
@@ -36,7 +36,7 @@ public class FileController {
 }
 ```
 
-## 定义接口
+### 定义接口
 ```java
 public interface FileService {
 
@@ -45,7 +45,7 @@ public interface FileService {
 }
 ```
 
-## 接口实现
+### 接口实现
 - 递归查询目录下所有的文件，当文件夹下没有文件，则返回文件夹名
 ```java
 @Service
@@ -140,6 +140,102 @@ public List<String> getFiles(String path) {
     "code": 200,
     "data": [
         "新建文件夹\\新建文件夹\\sss.txt"
+    ]
+}
+```
+### 创建文件类
+```java
+@Data
+public class FileDto {
+
+    /**
+     * 文件名
+     */
+    private String fileName;
+
+    /**
+     * 文件类型
+     * 0-图片
+     * 1-音频
+     * 2-视频
+     * 3-文件夹
+     * 4-其他
+     */
+    private Integer fileType;
+
+    public FileDto(String fileName, Integer fileType) {
+        this.fileName = fileName;
+        this.fileType = fileType;
+    }
+}
+```
+### 响应结果增加文件类型
+```json
+{
+    "code": 200,
+    "data": [
+        {
+            "fileName": "aa.jpg",
+            "fileType": 0
+        },
+        {
+            "fileName": "新建文件夹",
+            "fileType": 3
+        }
+    ]
+}
+```
+## 根据文件名模糊查询
+### 定义接口
+```java
+@GetMapping("/getFileByName")
+public R getFileByName(@RequestParam("name") String name){
+    return R.ok().put("data", fileService.getFileByName(name));
+}
+```
+### 实现
+- 递归查找所有文件，使用```string.contains()```方法将文件名与```name```进行匹配
+- 返回匹配成功的文件列表
+```java
+@Override
+public List<FileDto> getFileByName(String name) {
+    File directory = new File(fileBackUrl);
+    List<FileDto> list = directoryResolve(directory,new ArrayList<>());
+    return list.stream()
+            .filter(fileDto -> fileDto.getFileName().contains(name))
+            .collect(Collectors.toList());
+}
+
+public List<FileDto> directoryResolve(File directory, List<FileDto> list) {
+    File[] fileList = directory.listFiles();
+    if(fileList != null) {
+        for(File file : fileList) {
+            list.add(new FileDto(replacePath(file.getPath()),getFileType(file.getName())));
+            if(file.isDirectory()){
+                directoryResolve(new File(file.getPath()),list);
+            }
+        }
+    }
+    return list;
+}
+```
+### 查询结果
+```json
+{
+    "code": 200,
+    "data": [
+        {
+            "fileName": "新建文件夹",
+            "fileType": 3
+        },
+        {
+            "fileName": "新建文件夹\\新建 文本文档.txt",
+            "fileType": 4
+        },
+        {
+            "fileName": "新建文件夹 (2)",
+            "fileType": 3
+        }
     ]
 }
 ```
