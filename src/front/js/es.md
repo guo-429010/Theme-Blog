@@ -414,7 +414,68 @@ const randomColor = () => {
   - 判断是否为整数
   - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger)
 ## ECMAScript2016(ES7)
+### 幂运算符
+```js
+Math.pow(2, 10) === 2 ** 10
+```
 ## ECMAScript2017(ES8)
+### Object.values()
+```js
+const obj = { a: 1, b: 2, c: 3 }
+Object.values(obj) // [1, 2, 3]
+```
+### Object.entries()
+```js
+const obj = { a: 1, b: 2, c: 3 }
+Object.entries(obj) // [['a', 1], ['b', 2], ['c', 3]]
+```
+### Object.getOwnPropertyDescriptors()
+```js
+const obj = { a: 1, b: 2, c: 3 }
+Object.getOwnPropertyDescriptors(obj)
+```
+- value [属性的值]
+- writable [属性的值是否可被改变]
+- enumerable [属性的值是否可被枚举]
+- configurable [描述符本身是否可被修改，属性是否可被删除]
+```json
+{
+  "a": {
+    "value": 1,
+    "writable": true,
+    "enumerable": true,
+    "configurable": true
+  },
+  "b": {
+    "value": 2,
+    "writable": true,
+    "enumerable": true,
+    "configurable": true
+  },
+  "c": {
+    "value": 3,
+    "writable": true,
+    "enumerable": true,
+    "configurable": true
+  }
+}
+```
+### String.padStart()
+- 从头部补全字符串
+- targetLength [目标长度]
+- padString [填充字符串]
+```js
+const a = "ancdaaa"
+a.padStart(10, "0") // "00000ancdaaa"
+```
+### String.padEnd()
+- 从尾部补全字符串
+- targetLength [目标长度]
+- padString [填充字符串]
+```js
+const a = "ancdaaa"
+a.padEnd(10, "0") // "ancdaaa00000"
+```
 ## ECMAScript2018(ES9)
 ## ECMAScript2019(ES10)
 ## ECMAScript2020(ES11)
