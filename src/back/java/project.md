@@ -18,7 +18,30 @@ date: 2023-07-31
  */
 Collection<File> files = FileUtils.listFiles(new File(url), null, true);
 ```
+- 读取文件
+```java
+/**
+ * @param file 文件
+ * @param encoding 编码
+ * @return String
+ */
+FileUtils.readFileToString(file, "UTF-8");
 
+/**
+ * @param file 文件
+ * @param encoding 编码
+ * @return List<String>
+ */
+FileUtils.readLines(file, "UTF-8");
+```
+- 删除文件
+```java
+/** 删除文件、递归删除目录下所有文件
+ * @param file 文件
+ * @return boolean
+ */
+FileUtils.deleteQuietly(file);
+```
 ## 初步示例
 - ```getFiles()``` 方法用来查询文件夹下的所有文件
 ```java
@@ -238,5 +261,44 @@ public List<FileDto> directoryResolve(File directory, List<FileDto> list) {
             "fileType": 3
         }
     ]
+}
+```
+
+## 根据文件名读取文件内容
+- 传入文件名，返回文件的字符串
+```java
+@GetMapping("/readFile")
+public R readFile(@RequestParam("name") String name){
+    return R.ok(fileService.readFile(name));
+}
+```
+```java
+@Override
+public String readFile(String name) {
+    File file = new File(fileBackUrl + name);
+    try {
+        return FileUtils.readFileToString(file, "UTF-8");
+    }catch (Exception e) {
+        return "文件不存在";
+    }
+}
+```
+## 根据文件名删除文件
+- 传入文件名，返回删除结果
+```java
+@PostMapping("/deleteFile")
+public R deleteFile(@RequestParam("name") String name){
+    return fileService.deleteFile(name) ? R.ok("删除成功") : R.error("删除失败");
+}
+```
+```java
+@Override
+public Boolean deleteFile(String name) {
+    File file = new File(fileBackUrl + name);
+    try {
+        return FileUtils.deleteQuietly(file);
+    } catch (Exception e) {
+        return false;
+    }
 }
 ```
