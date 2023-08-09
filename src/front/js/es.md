@@ -413,6 +413,66 @@ const randomColor = () => {
 - ```Number.isInteger()```
   - 判断是否为整数
   - [详情](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger)
+### Generator
+- 控制迭代器的函数
+- 实例必须从生成器函数返回
+- ```Generator``` 函数的定义不能使用箭头函数
+- next 方法会返回一个对象
+  - value 属性表示当前的值
+  - done 属性表示是否迭代完成
+- return 方法可以让生成器提前结束
+  - ```g.return()``` { value: undefined, done: true }
+- throw 方法可以在暂停位置插入 throw 语句
+  - ```g.throw(new Error('break'))```
+```js
+function* gen() {
+  for(let i of [1,2,3]){
+    yield i 
+  }
+}
+let g = gen()
+
+g.next()
+// {value: 1, done: false}
+g.next()
+// {value: 2, done: false}
+g.next()
+// {value: 3, done: false}
+g.next()
+// {value: undefined, done: true}
+```
+- 无限迭代
+```js
+function* infinite() {
+  let index = 0;
+
+  while (true) {
+    yield index++;
+  }
+}
+
+let g = infinite()
+g.next()
+```
+### iterator
+- 为每一个对象定义了默认的迭代器
+
+输出斐波那契数列示例：
+```js
+const myIterable = {};
+myIterable[Symbol.iterator] = function* () {
+  let a = 1, b = 1
+  yield a
+  yield b
+  while (b < 50) {
+    yield b = a + b
+    a = b - a
+  }
+};
+for(let i of myIterable){
+  console.log(i) // 1 1 2 3 5 8 13 21 34 55
+}
+```
 ## ECMAScript2016(ES7)
 ### 幂运算符
 ```js
