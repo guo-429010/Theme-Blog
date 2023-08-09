@@ -477,8 +477,127 @@ const a = "ancdaaa"
 a.padEnd(10, "0") // "ancdaaa00000"
 ```
 ## ECMAScript2018(ES9)
+### for await of
+- 循环遍历异步可迭代对象以及同步可迭代对象
+```js
+const iterable = [
+  new Promise(resolve => setTimeout(() => resolve(2000), 2000)),
+  new Promise(resolve => setTimeout(() => resolve(1000), 1000)),
+  new Promise(resolve => setTimeout(() => resolve(3000), 3000))
+]
+async function asyncIterable() {
+  for await (const value of iterable) {
+    console.log(Date.now(),value)
+  }
+}
+asyncIterable()
+// 1691546904693 2000
+// 1691546904693 1000
+// 1691546905702 3000
+```
+- Symbol.asyncIterator
+```js
+var asyncIterable = {
+  [Symbol.asyncIterator]() {
+    return {
+      i: 0,
+      next() {
+        if (this.i < 3) {
+          return new Promise(resolve => setTimeout(() => resolve({value: this.i++,done: false}), 2000));
+        }
+        return new Promise(resolve => setTimeout(() => resolve({done: true}), 1000));
+      },
+    };
+  },
+};
+
+(async function () {
+  for await (num of asyncIterable) {
+    console.log(Date.now(),num);
+  }
+})();
+// 1691547299196 0
+// 1691547301204 1
+// 1691547303219 2
+```
 ## ECMAScript2019(ES10)
+### Object.fromEntries()
+- Object.fromEntries() 方法把键值对列表转换为一个对象
+```js
+const a = [
+  ['a', 1],
+  ['b', 2],
+  ['c', 3]
+]
+Object.fromEntries(a) // {a:1,b:2,c:3}
+```
+### String.trimStart()
+- 从头部删除空格
+```js
+const a = " ancdaaa"
+a.trimStart() // "ancdaaa"
+```
+### String.trimEnd()
+- 从尾部删除空格
+```js
+const a = " ancdaaa"
+a.trimEnd() // " ancdaaa"
+```
+### Array.flat()
+- 扁平化数组
+```js
+const a = [1,2,3,[4,5,[6,7]]]
+a.flat() // [1,2,3,4,5,6,7]
+```
+### Array.flatMap()
+- 扁平化数组并映射
+```js
+const a = [1,2,3,[4,5,[6,7]]]
+a.flatMap(x => x) // [1,2,3,4,5,6,7]
+```
+### Symbol.description
+- 返回 Symbol 对象的可选描述
+```js
+const a = Symbol('a')
+a.description // "a"
+```
 ## ECMAScript2020(ES11)
+### String.matchAll
+- 返回一个包含正则表达式所有匹配信息的迭代器
+```js
+const a = "ancdaaa"
+for(let match of a.matchAll(/a/g)) {
+  console.log(match)
+}
+// ['a', index: 0, input: 'ancdaaa', groups: undefined]
+// ['a', index: 4, input: 'ancdaaa', groups: undefined]
+// ['a', index: 5, input: 'ancdaaa', groups: undefined]
+// ['a', index: 6, input: 'ancdaaa', groups: undefined]
+```
+### Promise.allSettled
+- 返回一个在所有给定的 promise 都已经 fulfilled 或 rejected 后的 promise，并带有一个对象数组，每个对象表示对应的 promise 结果
+```js
+const a = Promise.allSettled([1,Promise.reject(2),Promise.resolve(3)])
+a.then(res => console.log(res))
+// [
+//   { status: 'fulfilled', value: 1 },
+//   { status: 'rejected', reason: 2 },
+//   { status: 'fulfilled', value: 3 }
+// ]
+```
+### 可选链
+-  ```?``` 表示如果问号左边表达式有值, 就会继续查询问号后面的字段
+- 可以防止```Uncaught TypeError: Cannot read properties of undefined```报错
+```js
+const a = {b: {c: 1}}
+a.b?.c // 1
+```
+### 空值合并
+```js
+const a = null
+const b = a ?? '默认值'
+console.log(b) // '默认值'
+```
 ## ECMAScript2021(ES12)
 ### String.prototype.replaceAll
 - 全部替换目标值
