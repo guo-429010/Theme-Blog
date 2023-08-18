@@ -170,3 +170,113 @@ router.get('/', (ctx) => {
   ctx.body = '服务器出错了'; // 发送响应体
 })
 ```
+#### 封装一个控制层
+- 创建一个文件夹controller
+- 创建一个UserController.js
+```js
+const User = require('../models/User');
+
+class UserController { 
+  /**
+   * 获取用户列表
+   * @param {Object} ctx
+   * @returns {Promise<void>}
+   */
+  async getList(ctx) {
+    const { page = 1, pageSize = 10 } = ctx.query;
+    const result = await User.getList({ page, pageSize });
+    ctx.body = result;
+  }
+}
+
+module.exports = new UserController();
+```
+- 使用
+```js
+const { getList } = require('../controller/UserController');
+router.get('/', getList);
+```
+### 错误处理
+- 基础的错误处理中间件
+  - 捕获 ```ctx.throw(412, 'id不存在')```时
+    - 客户端返回 status: 412, {"message":"id不存在"}
+  - 捕获内部错误```ctx.body = a``` 时
+    - 客户端返回 status: 500, {"message":"a is not defined"}
+```js
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    ctx.status = err.statusCode || err.status || 500;
+    ctx.body = {
+      message: err.message
+    };
+  }
+})
+```
+- koa-json-error
+  - 安装
+    - ```npm i koa-json-error --save```
+  - 引入
+    - ```const error = require('koa-json-error')```
+  - 使用
+    - ```app.use(error())```
+```js
+app.use(error({
+  postFormat: (e, { stack, ...rest }) => {
+    if (process.env.NODE_ENV === 'production') {
+      return {
+        stack,
+        ...rest
+      }
+    } else {
+      return rest
+    }
+  }
+}))
+```
+#### 配置不同环境
+- 安装cross-env
+```sh
+npm i cross-env --save-dev
+```
+```json
+{
+  "scripts": {
+    "start": "cross-env NODE_ENV=production nodemon app",
+    "dev": "node app"
+  }
+}
+```
+### 参数效验
+- 安装
+```sh
+npm i koa-parameter --save
+```
+- 引入
+```js
+const paramter = require('koa-parameter');
+```
+- 使用
+```js
+app.use(paramter(app))
+```
+- 新增用户参数效验示例
+```js
+create (ctx) {
+  ctx.verifyParams({
+    name: {
+      type: 'string',
+      required: true
+    },
+    age: {
+      type: 'number',
+      required: false
+    }
+  })
+  db.push(ctx.request.body)
+  ctx.body = '新增成功'
+}
+```
+- 错误参数示例
+![错误响应](../../.vuepress/public/assets/images/node_001.png)
