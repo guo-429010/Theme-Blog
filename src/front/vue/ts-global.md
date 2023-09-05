@@ -11,10 +11,11 @@ date: 2023-09-05
 ## 问题
 - 在vue3+ts中直接使用全局方法会报错
 ### js写法
+- 类型“ComponentInternalInstance | null”上不存在属性“proxy”。{style=color:red}
 ```ts
 import { getCurrentInstance } from 'vue'
 
-const { proxy } = getCurrentInstance() // 类型“ComponentInternalInstance | null”上不存在属性“proxy”。
+const { proxy } = getCurrentInstance()
 ```
 ### 引入类型
 ```ts
@@ -23,7 +24,7 @@ import { getCurrentInstance, ComponentInternalInstance } from 'vue'
 const { proxy } = getCurrentInstance() as ComponentInternalInstance
 ```
 ### 使用出错
-- 类型“ComponentPublicInstance<{}, {}, {}, {}, {}, {}, {}, {}, false, ComponentOptionsBase<any, any, any, any, any, any, any, any, any, {}>>”上不存在属性“$dateFormat”。
+- 类型“ComponentPublicInstance<{}, {}, {}, {}, {}, {}, {}, {}, false, ComponentOptionsBase<any, any, any, any, any, any, any, any, any, {}>>”上不存在属性“$dateFormat”。{style=color:red}
 ```vue
 {{ proxy?.$dateFormat(date) }}
 ```
