@@ -49,8 +49,25 @@ boot  etc  lib   media  opt  root  sbin  sys  usr
 ifconfig
 ```
 ![ip](../../.vuepress/public/assets/images/linux_01.png)
-### 连接
+### 通过密码连接
 ```sh
 ssh root@192.168.220.128
 ```
 - 输入密码后即可在本地终端中执行命令
+### 配置密钥连接
+- 本地生成密钥对
+  - 私钥（通常命名为 id_rsa）
+  - 公钥（通常命名为 id_rsa.pub）
+- Linux ssh配置公钥
+```sh
+// 进入目录
+cd /root/.ssh
+// 创建文件
+touch authorized_keys
+// 授予600权限
+chmod 600 /root/.ssh/authorized_keys
+```
+- 将`id_rsa.pub`复制到`authorized_keys`
+#### 测试连接
+
+![ssh密钥登录](../../.vuepress/public/assets/images/linux_03.png)
