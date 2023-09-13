@@ -22,3 +22,4 @@ date: 2023-06-02
 ### [vue3+ts自定义表单验证](validate.md)
 ### [vue3+ts全局方法的使用](ts-global.md)
 ### [文件批量上传](fileAllUpload.md)
+### [单文件上传组件](fileUpload.md)
