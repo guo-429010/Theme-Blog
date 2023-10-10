@@ -1,9 +1,7 @@
 ---
-title: Nginx教程
+title: Nginx
 category:
   - Nginx
-tag:
-  - 教程
 date: 2023-06-02
 ---
 
