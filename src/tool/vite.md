@@ -198,3 +198,51 @@ export default {
   }
 }
 ```
+
+### 配置环境变量
+- 环境变量
+  - 在 `import.meta.env` 对象上暴露环境变量
+```js
+{ 
+  BASE_URL: '/', // 部署应用时的基本 URL
+  MODE: 'development', // 应用运行的模式
+  DEV: true, // 应用是否运行在开发环境
+  PROD: false, // 应用是否运行在生产环境
+  SSR: false // 应用是否运行在 server 上
+}
+```
+- 配置文件
+```sh
+.env                # 所有情况下都会加载
+.env.local          # 所有情况下都会加载，但会被 git 忽略
+.env.[mode]         # 只在指定模式下加载
+.env.[mode].local   # 只在指定模式下加载，但会被 git 忽略
+```
+- 只有以 VITE_ 为前缀的变量才会暴露给经过 vite 处理的代码
+- 新建一个 `.env` 文件
+  - 设置变量
+    -  `VITE_KEY='vite_key'`
+  - 获取变量
+    - `console.log(import.meta.env.VITE_KEY)`
+- 开发环境： 新建一个 `.env.development` 文件
+- 生成环境： 新建一个 `.env.production` 文件
+- 模式切换
+  - 当执行 `vite` 时，它会自动加载 `.env.development`
+  - 当执行 `vite build` 时，它会自动加载 `.env.production`
+  - 当执行 `vite build --mode staging` 时，它会自动加载 `.env.staging`
+  ```json
+  "scripts": {
+    "start:dev": "vite",
+    "start:prod": "vite --mode production"
+  }
+  ```
+- 运行 `npm run preview` 预览生产版本
+```js
+{
+  BASE_URL: "/"
+  DEV: false
+  MODE: "production"
+  PROD: true
+  SSR: false
+}
+```
